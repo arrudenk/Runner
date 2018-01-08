@@ -14,35 +14,18 @@ var UP = 38;
 var LEFT = 37;
 var RIGHT = 39;
 var DOWN = 40;
-var SPD = 1;
+var SPD = 5;
 var XPOS = 200;
 var YPOS = 200;
-var EVENTS = [38, 40, 37, 39];
 var pressed = {};
 
 
 addEventListener("keydown", function(event) {
     pressed[event.keyCode] = true;
-    // if (pressed[RIGHT])
-    //     rect.vmove(context, SPD, 0);
-    // if (pressed[LEFT])
-    //     rect.vmove(context, -1 * SPD, 0);
-    // if (pressed[UP])
-    //     rect.vmove(context, 0, -1 * SPD);
-    // if (pressed[DOWN])
-    //     rect.vmove(context, 0, SPD);
-    // if (pressed[UP] && pressed[RIGHT])
-    //     rect.vmove(context, SPD, -1 * SPD);
-    // if (pressed[UP] && pressed[LEFT])
-    //     rect.vmove(context, -1 * SPD, -1 * SPD);
-    // if (pressed[DOWN] && pressed[RIGHT])
-    //     rect.vmove(context, SPD, SPD);
-    // if (pressed[DOWN] && pressed[LEFT])
-    //     rect.vmove(context, -1 * SPD, SPD);
 });
 
-addEventListener("keyup", function (ev) {
-    delete pressed[ev.keyCode];
+addEventListener("keyup", function (event) {
+    delete pressed[event.keyCode];
 });
 
 function Rect(x, y, w, h, color, ctx)
@@ -57,13 +40,13 @@ function Rect(x, y, w, h, color, ctx)
 
 Rect.prototype.draw = function ()
 {
-
     this.ctx.fillStyle = this.color;
     this.ctx.fillRect(this.x , this.y, this.w, this.h);
 };
 
 Rect.prototype.vmove = function (xSPD, ySPD) {
-    this.ctx.clearRect(this.x, this.y, this.w, this.h);
+        this.ctx.clearRect(this.x, this.y, this.w, this.h);
+        rect.colisRect();
         this.y = this.y + ySPD;
         this.x = this.x + xSPD;
         rect.draw();
@@ -89,24 +72,28 @@ Rect.prototype.events = function () {
 };
 
 Rect.prototype.colisRect = function () {
-    if ((this.y + this.h / 2) >= 415) {
-
+    if ((this.y + this.h / 2) >= bigRect.y - this.h / 2 - SPD){
+        this.y -= SPD;
+    }
+    if ((this.y) < 0){
+        this.y += SPD;
+    }
+    if (this.x < 0) {
+        this.x += SPD;
+    }
+    if (this.x + this.w / 2 > 640){
+        this.x -= SPD;
     }
 };
 
-var rect = new Rect(10, 350, 25, 25, "#010101", context);
+var rect = new Rect(0, 350, 30, 30, "#ff0100", context);
 rect.draw();
 
-var bigRect = new Rect(0, 415, 640, 65, "#620001", context);
+var bigRect = new Rect(0, 416, 640, 64, "#007cff", context);
 bigRect.draw();
 
-context.beginPath();
-context.moveTo(0, 415);
-context.lineTo(640,415);
-context.stroke();
-
-
 var fpsTimer = setInterval(rect.events,1000/60);
+// var colisTimer = setInterval(rect.colisRect, 1000/60);
 
 
 
