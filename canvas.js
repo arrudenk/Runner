@@ -45,7 +45,7 @@ Rect.prototype.draw = function ()
 };
 
 Rect.prototype.vmove = function (xSPD, ySPD) {
-        this.ctx.clearRect(this.x, this.y, this.w, this.h);
+        this.ctx.clearRect(this.x, this.y, this.w, this.h); //bad bad function need something better
         rect.colisRect();
         this.y = this.y + ySPD;
         this.x = this.x + xSPD;
