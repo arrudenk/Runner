@@ -70,7 +70,7 @@ Rect.prototype.events = function () {
     if (pressed[DOWN] && pressed[LEFT])
         rect.vmove(-1 * SPD, SPD);
 };
-
+// formal colision for more comfortable testing
 Rect.prototype.colisRect = function () {
     if ((this.y + this.h / 2) >= bigRect.y - this.h / 2 - SPD){
         this.y -= SPD;
