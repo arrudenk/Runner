@@ -14,10 +14,12 @@ var UP = 38;
 var LEFT = 37;
 var RIGHT = 39;
 var DOWN = 40;
-var SPD = 5;
+var SPACE = 32;
+var SPD = 2;
 var XPOS = 200;
 var YPOS = 200;
 var pressed = {};
+
 
 
 addEventListener("keydown", function(event) {
@@ -36,6 +38,8 @@ function Rect(x, y, w, h, color, ctx)
    this.h = h;
    this.color = color;
    this.ctx = ctx;
+   this.gravitySpeed = 0;
+   this.gravity = 0.05;
 }
 
 Rect.prototype.draw = function ()
@@ -45,44 +49,56 @@ Rect.prototype.draw = function ()
 };
 
 Rect.prototype.vmove = function (xSPD, ySPD) {
-        this.ctx.clearRect(this.x, this.y, this.w, this.h); //bad bad function need something better
-        rect.colisRect();
-        this.y = this.y + ySPD;
-        this.x = this.x + xSPD;
-        rect.draw();
+    this.ctx.clearRect(this.x, this.y, this.w, this.h); //bad bad function need something better
+    rect.colisRect();
+    this.y = this.y + ySPD;
+    this.x = this.x + xSPD;
+};
+
+Rect.prototype._PlayerJump = function (ySPD) {
+    if (pressed[SPACE]) {
+        this.y = this.y - SPD * 2;
+    }
+};
+
+Rect.prototype._Gravity = function () {
+    if (!pressed[UP])
+        rect.vmove(0, this.gravitySpeed += this.gravity)
 };
 
 Rect.prototype.events = function () {
+    // if (pressed[SPACE])
+    //     rect._PlayerJump(SPD * 2);
     if (pressed[RIGHT])
         rect.vmove(SPD, 0);
     if (pressed[LEFT])
-        rect.vmove(-1 * SPD, 0);
+        rect.vmove(-SPD, 0);
     if (pressed[UP])
-        rect.vmove(0, -1 * SPD);
+        rect.vmove(0, -SPD);
     if (pressed[DOWN])
         rect.vmove(0, SPD);
     if (pressed[UP] && pressed[RIGHT])
-        rect.vmove(SPD, -1 * SPD);
+        rect.vmove(SPD / 2, -SPD / 2);
     if (pressed[UP] && pressed[LEFT])
-        rect.vmove(-1 * SPD, -1 * SPD);
+        rect.vmove(-SPD / 2, -SPD / 2);
     if (pressed[DOWN] && pressed[RIGHT])
-        rect.vmove(SPD, SPD);
+        rect.vmove(SPD / 2, SPD / 2);
     if (pressed[DOWN] && pressed[LEFT])
-        rect.vmove(-1 * SPD, SPD);
+        rect.vmove(-1 * SPD / 2, SPD / 2);
 };
 // formal colision for more comfortable testing
 Rect.prototype.colisRect = function () {
-    if ((this.y + this.h / 2) >= bigRect.y - this.h / 2 - SPD){
-        this.y -= SPD;
+    if ((this.y + this.h + SPD) > bigRect.y){
+        this.y = bigRect.y - this.h;
     }
     if ((this.y) < 0){
-        this.y += SPD;
+        this.y = 0;
     }
     if (this.x < 0) {
-        this.x += SPD;
+        this.x = 0;
     }
-    if (this.x + this.w / 2 > 640){
-        this.x -= SPD;
+    if (this.x + this.w + SPD > 640){
+        this.x = 640 - this.w;
     }
 };
 
@@ -92,9 +108,24 @@ rect.draw();
 var bigRect = new Rect(0, 416, 640, 64, "#007cff", context);
 bigRect.draw();
 
-var fpsTimer = setInterval(rect.events,1000/60);
-// var colisTimer = setInterval(rect.colisRect, 1000/60);
+function Reload() {
+    requestAnimationFrame(Reload);
+
+    //fillStyle("#ffffff");
+    //context.fillRect(0, 0, 640, 480);
 
 
+    //rect._Gravity();
+    rect.events();
+    //rect.colisRect();
+    rect.draw();
+    bigRect.draw();
 
+
+}
+
+Reload();
+
+// <canvas id="myCanvas" width="640" height="480"
+// style="border:1px solid #000000;"></canvas>
 
