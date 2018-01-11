@@ -53,38 +53,39 @@ Rect.prototype.vmove = function (xSPD, ySPD) {
     rect.colisRect();
     this.y = this.y + ySPD;
     this.x = this.x + xSPD;
+    rect.draw();
 };
 
 Rect.prototype._PlayerJump = function (ySPD) {
-    if (pressed[SPACE]) {
-        this.y = this.y - SPD * 2;
-    }
+        rect.vmove(0, -SPD * 2)
 };
 
 Rect.prototype._Gravity = function () {
-    if (!pressed[UP])
-        rect.vmove(0, this.gravitySpeed += this.gravity)
+    if (this.y < 385 && !pressed[SPACE])
+        rect.vmove(0, this.y /100 );
+
 };
 
 Rect.prototype.events = function () {
-    // if (pressed[SPACE])
-    //     rect._PlayerJump(SPD * 2);
+    if (pressed[SPACE])
+        rect._PlayerJump(SPD + 1);
     if (pressed[RIGHT])
         rect.vmove(SPD, 0);
     if (pressed[LEFT])
         rect.vmove(-SPD, 0);
-    if (pressed[UP])
-        rect.vmove(0, -SPD);
-    if (pressed[DOWN])
-        rect.vmove(0, SPD);
-    if (pressed[UP] && pressed[RIGHT])
-        rect.vmove(SPD / 2, -SPD / 2);
-    if (pressed[UP] && pressed[LEFT])
-        rect.vmove(-SPD / 2, -SPD / 2);
-    if (pressed[DOWN] && pressed[RIGHT])
-        rect.vmove(SPD / 2, SPD / 2);
-    if (pressed[DOWN] && pressed[LEFT])
-        rect.vmove(-1 * SPD / 2, SPD / 2);
+
+    // if (pressed[UP])
+    //     rect.vmove(0, -SPD);
+    // if (pressed[DOWN])
+    //     rect.vmove(0, SPD);
+    // if (pressed[UP] && pressed[RIGHT])
+    //     rect.vmove(SPD / 2, -SPD / 2);
+    // if (pressed[UP] && pressed[LEFT])
+    //     rect.vmove(-SPD / 2, -SPD / 2);
+    // if (pressed[DOWN] && pressed[RIGHT])
+    //     rect.vmove(SPD / 2, SPD / 2);
+    // if (pressed[DOWN] && pressed[LEFT])
+    //     rect.vmove(-1 * SPD / 2, SPD / 2);
 };
 // formal colision for more comfortable testing
 Rect.prototype.colisRect = function () {
@@ -111,15 +112,18 @@ bigRect.draw();
 function Reload() {
     requestAnimationFrame(Reload);
 
+    // context.clearRect(rect.x, rect.y, rect.w, rect.h);
     //fillStyle("#ffffff");
-    //context.fillRect(0, 0, 640, 480);
 
-
-    //rect._Gravity();
-    rect.events();
-    //rect.colisRect();
-    rect.draw();
     bigRect.draw();
+    rect.draw();
+
+    rect.colisRect();
+
+
+    rect.events();
+    rect._Gravity();
+
 
 
 }
