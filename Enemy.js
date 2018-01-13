@@ -1,7 +1,7 @@
 
 function Enemy(x, y, w, h, color, ctx, type) {
     this.type = type;
-    if (type == "image") {
+    if (type === "image") {
         this.image = new Image();
         this.image.src = color;
     }
@@ -14,7 +14,7 @@ function Enemy(x, y, w, h, color, ctx, type) {
     this.speed = 4;
 }
 
-var enemy =  new Enemy(600, 385, 30, 30, "Enemy.png", context, "image");
+var enemy =  new Enemy(600, 385, 30, 30, "Textures/Enemy.png", context, "image");
 
 Enemy.prototype.draw = function () {
     if (this.type === "image") {

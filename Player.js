@@ -26,7 +26,7 @@ function Player(x, y, w, h, color, ctx, type)
     this.speed = 2;
 }
 
-var player = new Player(320, 350, 30, 30, "Player.png", context, "image");
+var player = new Player(320, 350, 30, 30, "Textures/Player.png", context, "image");
 
 Player.prototype.draw = function () {
     if (this.type == "image") {
