@@ -1,7 +1,14 @@
+
+var background = new Image();
+
+background.src = "https://goo.gl/smmKwu";
+
+
+
 requestAnimationFrame(function Reload() {
     if (GAME){
-        context.fillStyle = "#b6f5ff";
-        context.fillRect(0, 0, __VASWIDTH, __VASHEIGHT);
+        // context.fillStyle = "#bc00ff";
+        context.drawImage(background, 0, 0, __VASWIDTH, __VASHEIGHT);
         drawScore();
 
         player.colisRect();
