@@ -13,7 +13,7 @@ requestAnimationFrame(function Reload() {
         player.movement();
         enemy.hit(player.x, player.y);
         bigRect.draw();
-        // player._Gravity();
+        player._Gravity();
         requestAnimationFrame(Reload);
     }else {
     }

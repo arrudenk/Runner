@@ -41,49 +41,26 @@ Player.prototype.draw = function () {
 };
 
 Player.prototype.movement = function (x, y) {
-    this.y_velocity += 1.5;
     this.y += this.y_velocity;
     this.x += this.x_velocity;
     this.x_velocity *= 0.9;
     this.y_velocity *= 0.9;
-
-    // this.x = this.x + x;
-    // this.y = this.y + y;
-};
-
-Player.prototype._PlayerJump = function () {
-    player.movement(0, -100);
-
 };
 
 Player.prototype._Gravity = function () {
-    if (this.y < 385 && !pressed[keycod.Space])
-        player.movement(0, this.y /100);
-
+    this.y_velocity += 1.5;
 };
 
 Player.prototype.events = function () {
-    if (pressed[keycod.Space] && this.jumping == false) {
-        this.y_velocity -= 30;
+    if (pressed[keycod.Space] && this.jumping === false) {
+        this.y_velocity -= 15;
         this.jumping = true;
         console.log("up");
     }
     if (pressed[keycod.Right])
-        this.x_velocity += 1.5;
+        this.x_velocity += 0.7;
     if (pressed[keycod.Left])
-        this.x_velocity -= 1.5;
-    // if (pressed[UP])
-    //     rect.vmove(0, -SPD);
-    // if (pressed[DOWN])
-    //     rect.vmove(0, SPD);
-    // if (pressed[UP] && pressed[RIGHT])
-    //     rect.vmove(SPD / 2, -SPD / 2);
-    // if (pressed[UP] && pressed[LEFT])
-    //     rect.vmove(-SPD / 2, -SPD / 2);
-    // if (pressed[DOWN] && pressed[RIGHT])
-    //     rect.vmove(SPD / 2, SPD / 2);
-    // if (pressed[DOWN] && pressed[LEFT])
-    //     rect.vmove(-1 * SPD / 2, SPD / 2);
+        this.x_velocity -= 0.7;
 };
 // formal colision for more comfortable testing
 
