@@ -23,7 +23,6 @@ function Player(x, y, w, h, color, ctx, type)
     this.h = h;
     this.color = color;
     this.ctx = ctx;
-    this.speed = 2;
     this.jumping = true;
     this.x_velocity = 0;
     this.y_velocity = 0;
@@ -40,7 +39,7 @@ Player.prototype.draw = function () {
     }
 };
 
-Player.prototype.movement = function (x, y) {
+Player.prototype.movement = function () {
     this.y += this.y_velocity;
     this.x += this.x_velocity;
     this.x_velocity *= 0.9;
@@ -53,7 +52,7 @@ Player.prototype._Gravity = function () {
 
 Player.prototype.events = function () {
     if (pressed[keycod.Space] && this.jumping === false) {
-        this.y_velocity -= 15;
+        this.y_velocity -= 20;
         this.jumping = true;
         console.log("up");
     }
@@ -65,8 +64,8 @@ Player.prototype.events = function () {
 // formal colision for more comfortable testing
 
 Player.prototype.colisRect = function () {
-    if ((this.y + this.h) > bigRect.y){
-        this.y = bigRect.y - this.h;
+    if ((this.y + this.h) > feeld.y){
+        this.y = feeld.y - this.h;
         this.y_velocity = 0;
         this.jumping = false;
     }
@@ -76,7 +75,7 @@ Player.prototype.colisRect = function () {
     if (this.x < 0) {
         this.x = 0;
     }
-    if (this.x + this.w + this.speed > 640){
+    if (this.x + this.w > 640){
         this.x = 640 - this.w;
     }
 };

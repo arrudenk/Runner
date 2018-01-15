@@ -7,12 +7,17 @@ requestAnimationFrame(function Reload() {
         player.colisRect();
         player.draw();
         enemy.draw();
+        feeld.draw();
+        feeld.movement();
         enemy.movement();
+        player.movement();
+
 
         player.events();
-        player.movement();
-        enemy.hit(player.x, player.y);
-        bigRect.draw();
+
+        // enemy.hit(player.x, player.y);
+
+
         player._Gravity();
         requestAnimationFrame(Reload);
     }else {

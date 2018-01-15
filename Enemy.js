@@ -11,6 +11,7 @@ function Enemy(x, y, w, h, color, ctx, type) {
     this.h = h;
     this.color = color;
     this.ctx = ctx;
+    // this.
     this.speed = 4;
 }
 
@@ -34,15 +35,15 @@ Enemy.prototype.movement = function () {
     }
 };
 
-Enemy.prototype.hit = function (playerX, playerY) {
-    if (playerX === this.x && playerY >= this.y) {
-        alert("Over! Your score: " + SCORE);
-        GAME = false;
-    }
-    if ((playerX + player.w - this.speed >= this.x && playerX + player.w - this.speed <= this.x + this.w)
-        && playerY + player.h + 3 >= this.y) {
-        alert("Over! Your score: " + SCORE);
-        GAME = false;
-    }
-    // }else if (playerX == this.x)
-};
+// Enemy.prototype.hit = function (playerX, playerY) {
+//     if (playerX === this.x && playerY >= this.y) {
+//         alert("Over! Your score: " + SCORE);
+//         GAME = false;
+//     }
+//     if ((playerX + player.w - this.speed >= this.x && playerX + player.w - this.speed <= this.x + this.w)
+//         && playerY + player.h + 3 >= this.y) {
+//         alert("Over! Your score: " + SCORE);
+//         GAME = false;
+//     }
+//     // }else if (playerX == this.x)
+// };
